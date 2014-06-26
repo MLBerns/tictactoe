@@ -4,7 +4,7 @@ var GameBoard = Backbone.Model.extend({
   },
 
   checkGameStatus: function(){
-    alert("Change made to box " + this.get('position'))
+    alert("Change made to box " + this.get('position') + ". Row: " + this.get('row') + ", Col: " + this.get('col') + ", Coord: " + this.get('XYcoord'));
   }
 });
 
@@ -20,15 +20,31 @@ var GameSquare = Backbone.Model.extend({
 
 var GameSquares = Backbone.Collection.extend({
   initialize: function(){
-    counter = 0
-    square_count = 9
-    while (counter < square_count) {
+    square_counter = 0
+    while (square_counter < 9) {
       gameSquare = new GameSquare;
-      gameSquare.set({position: counter});
+      gameSquare.set({
+        position: square_counter,
+        row: this.getRow(square_counter),
+        col: this.getCol(square_counter),
+        XYcoord: this.getCoord(square_counter)
+      });
       this.add(gameSquare);
-      counter++;
+      square_counter++;
     }
-  }
+  },
+
+  getRow: function(square_counter){
+    return Math.floor(square_counter/3)
+  },
+
+  getCol: function(square_counter){
+    return Math.floor(square_counter%3)
+  },
+
+  getXYCoord: function(square_counter){
+    return [ Math.floor(square_counter/3), Math.floor(square_counter%3) ]
+  },
 });
 
 var GameSquareView = Backbone.View.extend({
@@ -61,7 +77,8 @@ var GameBoardView = Backbone.View.extend({
   addSquare: function(gameSquare){
     if (gameSquare.get('position') % 3 == 0) {
       this.$el.append("<br/>")
-    }
+    };
+    gameSquare.getRow;
     gameSquare.on('change', this.model.checkGameStatus)
     var gameSquareView = new GameSquareView({model: gameSquare})
     this.$el.append(gameSquareView.render().el)
