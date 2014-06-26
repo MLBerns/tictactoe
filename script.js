@@ -27,7 +27,7 @@ var GameSquares = Backbone.Collection.extend({
         position: square_counter,
         row: this.getRow(square_counter),
         col: this.getCol(square_counter),
-        XYcoord: this.getCoord(square_counter)
+        XYcoord: this.getXYCoord(square_counter)
       });
       this.add(gameSquare);
       square_counter++;
