@@ -1,4 +1,4 @@
-$('body').ready(function() {
+$(function() {
   var gameBoard = new GameBoard();
   var gameBoardView = new GameBoardView({model: gameBoard})
 });

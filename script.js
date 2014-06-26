@@ -1,12 +1,20 @@
 var GameBoard = Backbone.Model.extend({
   initialize: function(){
     this.set({gameSquares: new GameSquares()})
+  },
+
+  checkGameStatus: function(){
+    alert("Change made to box " + this.get('position'))
   }
 });
 
 var GameSquare = Backbone.Model.extend({
   defaults: {
     filled: false,
+  },
+
+  mark: function(){
+    return "X"
   }
 });
 
@@ -20,7 +28,7 @@ var GameSquares = Backbone.Collection.extend({
       this.add(gameSquare);
       counter++;
     }
-  },
+  }
 });
 
 var GameSquareView = Backbone.View.extend({
@@ -31,7 +39,9 @@ var GameSquareView = Backbone.View.extend({
   },
 
   clicked: function(e){
-    console.log(this.$el.html("<span>X</span>"))
+    console.log(this.$el.html("<span>" + this.model.mark() + "</span>"));
+    console.log(this.model.get('filled'));
+    this.model.set({filled: true});
   }
 })
 
@@ -52,9 +62,9 @@ var GameBoardView = Backbone.View.extend({
     if (gameSquare.get('position') % 3 == 0) {
       this.$el.append("<br/>")
     }
+    gameSquare.on('change', this.model.checkGameStatus)
     var gameSquareView = new GameSquareView({model: gameSquare})
     this.$el.append(gameSquareView.render().el)
-
   }
 });
 
