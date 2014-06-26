@@ -1,0 +1,10 @@
+.game_square {
+  border: 1px solid black;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+}
+
+.game_square span {
+  position: absolute;
+}
