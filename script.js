@@ -65,6 +65,12 @@ var GameBoardView = Backbone.View.extend({
   id: "gameboard",
 
   initialize: function(){
+    this.player1 = new Player({
+      name: "Player 1"
+    });
+    this.player2 = new Player({
+      name: "Player 2"
+    })
     this.render();
   },
 
