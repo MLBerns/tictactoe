@@ -1,6 +1,7 @@
 var GameBoard = Backbone.Model.extend({
   initialize: function(){
     this.set({gameSquares: new GameSquares()})
+    this.set({players: new Players()})
   },
 
   checkGameStatus: function(){
@@ -65,12 +66,6 @@ var GameBoardView = Backbone.View.extend({
   id: "gameboard",
 
   initialize: function(){
-    this.player1 = new Player({
-      name: "Player 1"
-    });
-    this.player2 = new Player({
-      name: "Player 2"
-    })
     this.render();
   },
 
@@ -84,10 +79,25 @@ var GameBoardView = Backbone.View.extend({
     if (gameSquare.get('position') % 3 == 0) {
       this.$el.append("<br/>")
     };
-    gameSquare.getRow;
+    //gameSquare.getRow;
     gameSquare.on('change', this.model.checkGameStatus)
     var gameSquareView = new GameSquareView({model: gameSquare})
     this.$el.append(gameSquareView.render().el)
+  }
+});
+
+var Players = Backbone.Collection.extend({
+  initialize: function(){
+     this.player1 = new Player({
+      player_name: "Player 1",
+      active: true,
+      player_mark: "X"
+    });
+    this.player2 = new Player({
+      player_name: "Player 2",
+      active: false,
+      player_mark: "O"
+    })
   }
 });
 
